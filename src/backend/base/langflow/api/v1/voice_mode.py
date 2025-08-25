@@ -14,7 +14,6 @@ from uuid import UUID, uuid4
 import numpy as np
 import requests
 import sqlalchemy
-import webrtcvad
 import websockets
 from cryptography.fernet import InvalidToken
 from elevenlabs import ElevenLabs
@@ -81,6 +80,11 @@ OPENAI_TO_LF = "OpenAI → LF"
 CLIENT_TO_LF = "Client → LF"
 # --- Helper Functions ---
 
+@lru_cache(maxsize=1)
+def get_vad():
+    import webrtcvad
+
+    return webrtcvad.Vad(mode=3)
 
 async def authenticate_and_get_openai_key(session: DbSession, user: User, websocket: WebSocket):
     """Authenticate the user using a token or API key and retrieve the OpenAI API key.
@@ -764,7 +768,7 @@ async def flow_as_tool_websocket(
             vad_queue: asyncio.Queue = asyncio.Queue()
             vad_audio_buffer = bytearray()
             bot_speaking_flag = [False]
-            vad = webrtcvad.Vad(mode=3)
+            vad = get_vad()
 
             async def process_vad_audio() -> None:
                 nonlocal vad_audio_buffer

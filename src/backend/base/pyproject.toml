@@ -1,6 +1,6 @@
 [project]
-name = "langflow-base"
-version = "0.4.3"
+name = "langflow-base-bataeves"
+version = "0.4.3.post1"
 description = "A Python package with a built-in web application"
 requires-python = ">=3.10,<3.14"
 license = "MIT"
@@ -228,11 +228,15 @@ build-backend = "hatchling.build"
 
 
 [project.urls]
-Repository = "https://github.com/langflow-ai/langflow"
+Repository = "https://github.com/bataeves/langflow"
 Documentation = "https://docs.langflow.org"
 
 # Optional dependencies for uv
 [project.optional-dependencies]
+
+audio = [
+    "webrtcvad>=2.0.10",
+]
 
 postgresql = [
   "sqlalchemy[postgresql_psycopg2binary]",
