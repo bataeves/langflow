@@ -7,7 +7,7 @@ import traceback
 import uuid
 from collections import defaultdict
 from datetime import datetime, timezone
-from functools import partial
+from functools import partial, lru_cache
 from typing import Any
 from uuid import UUID, uuid4
 
